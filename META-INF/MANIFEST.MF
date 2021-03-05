@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Rmp Plug-in
 Bundle-SymbolicName: ConfigurationRegistry;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: com.myplugin.rmp.Activator
+Bundle-Activator: com.windhoverlabs.studio.Activator
 Bundle-Vendor: MYPLUGIN
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -14,5 +14,5 @@ Automatic-Module-Name: com.myplugin.rmp
 Eclipse-AutoStart: true
 Import-Package: com.google.gson;version="2.7.0",
  org.eclipse.core.variables
-Export-Package: com.myplugin.rmp,
- com.myplugin.rmp.views
+Export-Package: com.windhoverlabs.studio,
+ com.windhoverlabs.studio.views

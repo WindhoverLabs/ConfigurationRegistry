@@ -1,4 +1,4 @@
-package com.myplugin.rmp;
+package com.windhoverlabs.studio;
 
 import java.util.HashSet;
 import java.util.Set;

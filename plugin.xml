@@ -13,12 +13,12 @@
             inject="true"
             icon="icons/sample.png"
             category="ResourceManagerView"
-            class="com.myplugin.rmp.views.ResourceManagerView"
-            id="com.myplugin.rmp.views.ResourceManagerView">
+            class="com.windhoverlabs.studio.views.ResourceManagerView"
+            id="com.windhoverlabs.studio.ResourceManagerView">
       </view>
       <view
             category="Resource Manager Category"
-            class="com.myplugin.rmp.views.PropertyManagerView"
+            class="com.windhoverlabs.studio.views.PropertyManagerView"
             id="com.myplugin.rmp.views.PropertyManagerView"
             name="Property Manager View"
             restorable="true">
@@ -33,9 +33,17 @@
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
-            class="com.myplugin.rmp.CFSPropertiesPage"
-            id="com.myplugin.rmp.CFSPropertiesPage"
+            class="com.windhoverlabs.studio.CFSPropertiesPage"
+            id="com.windhoverlabs.studio.CFSPropertiesPage"
             name="Configuration Registry">
+         <enabledWhen>
+            <adapt
+                  type="org.eclipse.core.resources.IProject">
+               <reference
+                     definitionId="com.windhoverlabs.ide.isAirlinerNature">
+               </reference>
+            </adapt>
+         </enabledWhen>
       </page>
    </extension>
 

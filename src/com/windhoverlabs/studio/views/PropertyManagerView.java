@@ -1,4 +1,4 @@
-package com.myplugin.rmp.views;
+package com.windhoverlabs.studio.views;
 import java.util.ArrayList;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;

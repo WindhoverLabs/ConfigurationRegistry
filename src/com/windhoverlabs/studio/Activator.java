@@ -1,4 +1,4 @@
-package com.myplugin.rmp;
+package com.windhoverlabs.studio;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
