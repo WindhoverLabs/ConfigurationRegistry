@@ -199,7 +199,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
   	 * 
   	 * @return If varString is valid, the new string with all of its variables translated to its actual values. Otherwise,
   	 * this function returns null. 
-  	 * @throws CoreException
   	 */
   	public static String convertVarString(String varString) 
   	{
