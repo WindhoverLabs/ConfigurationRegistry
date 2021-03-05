@@ -33,10 +33,9 @@
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
-            class="com.myplugin.rmp.propertyPage"
-            id="com.myplugin.rmp.propertyPage"
-            name=" com.myplugin.rmp.propertyPage"
-            objectClass="com.myplugin.rmp.views.PropertyManagerView$TreeObject">
+            class="com.myplugin.rmp.CFSPropertiesPage"
+            id="com.myplugin.rmp.CFSPropertiesPage"
+            name="Configuration Registry">
       </page>
    </extension>
 
