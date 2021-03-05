@@ -1,4 +1,4 @@
-package com.myplugin.rmp;
+package com.windhoverlabs.studio;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

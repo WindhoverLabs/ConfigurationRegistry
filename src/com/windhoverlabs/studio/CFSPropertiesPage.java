@@ -1,4 +1,4 @@
- package com.myplugin.rmp;
+ package com.windhoverlabs.studio;
   import org.eclipse.core.resources.IResource;
   import org.eclipse.core.runtime.CoreException;
   import org.eclipse.core.runtime.QualifiedName;
@@ -11,9 +11,8 @@
   import org.eclipse.swt.widgets.Text;
   import org.eclipse.ui.IWorkbenchPropertyPage;
   import org.eclipse.ui.dialogs.PropertyPage;
-  import com.myplugin.rmp.views.PropertyManagerView.TreeObject;
- 
-  import java.io.File;
+
+import java.io.File;
   import java.util.ArrayList;
   import java.util.StringTokenizer;
 
@@ -30,6 +29,9 @@
   import org.eclipse.ui.IWorkbenchPropertyPage;
   import org.eclipse.ui.dialogs.PropertyPage;
   import org.eclipse.ui.preferences.ScopedPreferenceStore;
+
+import com.windhoverlabs.studio.views.PropertyManagerView.TreeObject;
+
 import org.eclipse.swt.widgets.Button;
 
   /**
@@ -63,7 +65,6 @@ import org.eclipse.swt.widgets.Button;
   		prepareProperties();
   		prepareHolder(parent);
   		createPathChooser();
-  	
   		return getControl();
   	}
   	
@@ -138,7 +139,6 @@ import org.eclipse.swt.widgets.Button;
   		String[] items = pathChooser.getListControl(pathEditorHolder).getItems();
   		String oneList = createList(items);
   		preferenceStore.setValue(PropertiesConstants.DEF_CONFIG_PATHS, oneList);
-  		ContextManager.searchDefinitionConfigurationFiles(currentProject);
   		return true;
   	}
   	

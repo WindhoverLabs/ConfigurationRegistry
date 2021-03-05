@@ -1,4 +1,4 @@
-package com.myplugin.rmp.views;
+package com.windhoverlabs.studio.views;
 
 
 import org.eclipse.swt.widgets.Composite;
