@@ -1,18 +1,13 @@
- package com.windhoverlabs.studio;
-  import org.eclipse.core.resources.IResource;
-  import org.eclipse.core.runtime.CoreException;
-  import org.eclipse.core.runtime.QualifiedName;
+  package com.windhoverlabs.studio;
   import org.eclipse.swt.SWT;
   import org.eclipse.swt.layout.GridData;
   import org.eclipse.swt.layout.GridLayout;
   import org.eclipse.swt.widgets.Composite;
   import org.eclipse.swt.widgets.Control;
-  import org.eclipse.swt.widgets.Label;
-  import org.eclipse.swt.widgets.Text;
   import org.eclipse.ui.IWorkbenchPropertyPage;
   import org.eclipse.ui.dialogs.PropertyPage;
 
-import java.io.File;
+  import java.io.File;
   import java.util.ArrayList;
   import java.util.StringTokenizer;
 
@@ -22,18 +17,7 @@ import java.io.File;
   import org.eclipse.core.runtime.preferences.IScopeContext;
   import org.eclipse.jface.preference.IPreferenceStore;
   import org.eclipse.jface.preference.PathEditor;
-  import org.eclipse.swt.SWT;
-  import org.eclipse.swt.layout.GridData;
-  import org.eclipse.swt.widgets.Composite;
-  import org.eclipse.swt.widgets.Control;
-  import org.eclipse.ui.IWorkbenchPropertyPage;
-  import org.eclipse.ui.dialogs.PropertyPage;
   import org.eclipse.ui.preferences.ScopedPreferenceStore;
-
-import com.windhoverlabs.studio.views.PropertyManagerView.TreeObject;
-
-import org.eclipse.swt.widgets.Button;
-
   /**
    * 
    * GUI Interface for Airliner section in project properties.
@@ -80,7 +64,7 @@ import org.eclipse.swt.widgets.Button;
   		currentProject = (IProject) adaptable.getAdapter(IProject.class);
           context = new ProjectScope(currentProject);
           // Retrieve the current project's preference store, and associate the property page with it.
-          preferenceStore = new ScopedPreferenceStore(context, "com.windhoverlabs.ide.cfsNature");
+          preferenceStore = new ScopedPreferenceStore(context, "com.windhoverlabs.studio.registryDB");
           setPreferenceStore(preferenceStore);
   	}
   	
