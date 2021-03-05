@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IAdaptable;
   import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
+import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
   import org.eclipse.jface.preference.PathEditor;
   import org.eclipse.ui.preferences.ScopedPreferenceStore;
@@ -32,7 +33,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
    */
   public class CFSPropertiesPage extends PropertyPage implements IWorkbenchPropertyPage {
   		
-  	private PathEditor pathChooser;
+  	private FileFieldEditor fileEditor;
   	private IProject currentProject;
   	private IPreferenceStore preferenceStore;
   	private IScopeContext context;
@@ -103,18 +104,18 @@ import org.eclipse.jface.preference.IPreferenceStore;
   		// Retrieve the current properties from the associated preference store.
   		// Retrieve the preferenceStore string representation of path, and convert it into an array of paths.
   		String defaultPaths = getDefaultPaths();
-  		preferenceStore.setDefault(PropertiesConstants.DEF_CONFIG_PATHS, defaultPaths);
+  		preferenceStore.setToDefault(PropertiesConstants.DEF_CONFIG_PATHS);
   		String paths = preferenceStore.getString(PropertiesConstants.DEF_CONFIG_PATHS);
-  		String[] pathList = parseString(paths);
   		
-  		// Create the path chooser, and assign it with the preference variable 'path', set it to the associated preference store.
-  		pathChooser = new PathEditor(PropertiesConstants.DEF_CONFIG_PATHS, "Path to YAML file", "Choose", pathEditorHolder);
-  		pathChooser.setPreferenceStore(preferenceStore);
-  		String val = preferenceStore.getString(PropertiesConstants.DEF_CONFIG_PATHS);
+  		System.out.println("path++++++++++" + paths);
+  		String[] supportedExtensions = new String[]{"yaml"};
   		
-  		System.out.println("path--------------------------->>>" +  Arrays.toString(convertVarString(val).split(":")));
-  		// Populate the list with current project's path property. If it hasn't been set yet, then set it to the default.
-  		pathChooser.getListControl(pathEditorHolder).setItems(pathList);
+  		
+  		// Create the file field editor, and assign it with the preference variable 'path', set it to the associated preference store.
+  		fileEditor = new FileFieldEditor(PropertiesConstants.DEF_CONFIG_PATHS, "Path to YAML file", pathEditorHolder);
+  		fileEditor.setPreferenceStore(preferenceStore);
+  		fileEditor.setFileExtensions(supportedExtensions);
+  		fileEditor.load();
   	}
   	
   	/**
@@ -123,7 +124,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
       * 
       */
   	protected void performDefaults() {
-  		pathChooser.loadDefault();
+  		fileEditor.loadDefault();
   		super.performDefaults();
   	}
   	
@@ -135,9 +136,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
       * 
       */
   	public boolean performOk() {
-  		String[] items = pathChooser.getListControl(pathEditorHolder).getItems();
-  		String oneList = createList(items);
-  		preferenceStore.setValue(PropertiesConstants.DEF_CONFIG_PATHS, oneList);
+  		preferenceStore.setValue(PropertiesConstants.DEF_CONFIG_PATHS, fileEditor.getStringValue());
   		return true;
   	}
   	

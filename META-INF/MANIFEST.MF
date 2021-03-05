@@ -14,5 +14,4 @@ Automatic-Module-Name: com.myplugin.rmp
 Eclipse-AutoStart: true
 Import-Package: com.google.gson;version="2.7.0",
  org.eclipse.core.variables
-Export-Package: com.windhoverlabs.studio,
- com.windhoverlabs.studio.views
+Export-Package: com.windhoverlabs.studio
