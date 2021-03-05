@@ -1,29 +1,25 @@
-  package com.windhoverlabs.studio;
-  import org.eclipse.swt.SWT;
-  import org.eclipse.swt.layout.GridData;
-  import org.eclipse.swt.layout.GridLayout;
-  import org.eclipse.swt.widgets.Composite;
-  import org.eclipse.swt.widgets.Control;
-  import org.eclipse.ui.IWorkbenchPropertyPage;
-  import org.eclipse.ui.dialogs.PropertyPage;
+package com.windhoverlabs.studio;
 
-  import java.io.File;
-  import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.StringTokenizer;
-import java.util.logging.Logger;
-
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.ui.IWorkbenchPropertyPage;
+import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.core.resources.IProject;
-  import org.eclipse.core.resources.ProjectScope;
+import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-  import org.eclipse.core.runtime.preferences.IScopeContext;
+import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.jface.preference.FileFieldEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
-  import org.eclipse.jface.preference.PathEditor;
-  import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
+
+import java.util.logging.Logger;
+
   /**
    * 
    * GUI Interface for Airliner section in project properties.
@@ -45,7 +41,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
 	private static final Logger LOGGER = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName() );
   	
   	public CFSPropertiesPage() {
-
   		
   	}
   	/**
@@ -63,7 +58,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
   		createPathChooser();
   		return getControl();
   	}
-  	
   	
   	/**
       * 
@@ -103,16 +97,17 @@ import org.eclipse.jface.preference.IPreferenceStore;
   	private void createPathChooser() {
   		// Retrieve the current properties from the associated preference store.
   		// Retrieve the preferenceStore string representation of path, and convert it into an array of paths.
-  		String defaultPaths = getDefaultPaths();
-  		preferenceStore.setToDefault(PropertiesConstants.DEF_CONFIG_PATHS);
-  		String paths = preferenceStore.getString(PropertiesConstants.DEF_CONFIG_PATHS);
-  		
-  		System.out.println("path++++++++++" + paths);
-  		String[] supportedExtensions = new String[]{"yaml"};
+  		String defaultPath = getDefaultPath();
+  		preferenceStore.setDefault(PropertiesConstants.DEF_CONFIG_PATHS, defaultPath);  		
+  		/**
+  		 *@note These extensions are platform-specific. These were tested on Ubuntu 18.04 LTS.
+  		 *We should also save these in some type of constant. The ones in FileDialog are not accessible for some reason.
+  		 */
+  		String[] supportedExtensions = new String[]{"*.yml;*.yaml"};
   		
   		
   		// Create the file field editor, and assign it with the preference variable 'path', set it to the associated preference store.
-  		fileEditor = new FileFieldEditor(PropertiesConstants.DEF_CONFIG_PATHS, "Path to YAML file", pathEditorHolder);
+  		fileEditor = new FileFieldEditor(PropertiesConstants.DEF_CONFIG_PATHS, "Path to Registry", pathEditorHolder);
   		fileEditor.setPreferenceStore(preferenceStore);
   		fileEditor.setFileExtensions(supportedExtensions);
   		fileEditor.load();
@@ -124,7 +119,7 @@ import org.eclipse.jface.preference.IPreferenceStore;
       * 
       */
   	protected void performDefaults() {
-  		fileEditor.loadDefault();
+  		fileEditor.load();
   		super.performDefaults();
   	}
   	
@@ -142,43 +137,12 @@ import org.eclipse.jface.preference.IPreferenceStore;
   	
   	/**
       * 
-      * Helper function to convert an array of paths to a single string to store in the preference store.
-      * 
-      * @param items
-      * @return paths
-      * 
-      */
-  	private String createList(String[] items) {
-  		StringBuilder path = new StringBuilder("");
-
-  		for (String item : items) {
-  			path.append(item);
-  			path.append(File.pathSeparator);
-  		}
-  		return path.toString();
-  	}
-  	
-  	/**
-      * 
-      * Helper function to convert a single string of paths to an array of paths to be used as input for the path editor chooser.
-      * 
-      * @param stringList
-      * @return pathsAsList
-      * 
-      */
-  	private String[] parseString(String stringList) {
-  		return stringList.split(File.pathSeparator);
-  		
-  	}
-  	
-  	/**
-      * 
       * Returns the default path of the configuration file. This could be YAML, XML, SQLite, etc.
       * 
       * @return defaultPath
       * 
       */
-  	private String getDefaultPaths() {
+  	private String getDefaultPath() {
   		String defaultPath = "${project_loc}/Resources/definitions.yaml";
   		
   		return defaultPath;
