@@ -9,13 +9,18 @@
 
   import java.io.File;
   import java.util.ArrayList;
-  import java.util.StringTokenizer;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+import java.util.logging.Logger;
 
-  import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProject;
   import org.eclipse.core.resources.ProjectScope;
-  import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
   import org.eclipse.core.runtime.preferences.IScopeContext;
-  import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.core.variables.IStringVariableManager;
+import org.eclipse.core.variables.VariablesPlugin;
+import org.eclipse.jface.preference.IPreferenceStore;
   import org.eclipse.jface.preference.PathEditor;
   import org.eclipse.ui.preferences.ScopedPreferenceStore;
   /**
@@ -33,7 +38,13 @@
   	private IScopeContext context;
   	private Composite pathEditorHolder;
   	
+  	/**
+  	 *@todo Not a great way of declaring the logger. Will revisit.
+  	 */
+	private static final Logger LOGGER = Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName() );
+  	
   	public CFSPropertiesPage() {
+
   		
   	}
   	/**
@@ -95,9 +106,13 @@
   		preferenceStore.setDefault(PropertiesConstants.DEF_CONFIG_PATHS, defaultPaths);
   		String paths = preferenceStore.getString(PropertiesConstants.DEF_CONFIG_PATHS);
   		String[] pathList = parseString(paths);
+  		
   		// Create the path chooser, and assign it with the preference variable 'path', set it to the associated preference store.
   		pathChooser = new PathEditor(PropertiesConstants.DEF_CONFIG_PATHS, "Path to YAML file", "Choose", pathEditorHolder);
   		pathChooser.setPreferenceStore(preferenceStore);
+  		String val = preferenceStore.getString(PropertiesConstants.DEF_CONFIG_PATHS);
+  		
+  		System.out.println("path--------------------------->>>" +  Arrays.toString(convertVarString(val).split(":")));
   		// Populate the list with current project's path property. If it hasn't been set yet, then set it to the default.
   		pathChooser.getListControl(pathEditorHolder).setItems(pathList);
   	}
@@ -153,12 +168,8 @@
       * 
       */
   	private String[] parseString(String stringList) {
-  		StringTokenizer st = new StringTokenizer(stringList, File.pathSeparator + "\n\r");
-  		ArrayList<Object> v = new ArrayList<>();
-  		while (st.hasMoreElements()) {
-  			v.add(st.nextElement());
-  		}
-  		return v.toArray(new String[v.size()]);
+  		return stringList.split(File.pathSeparator);
+  		
   	}
   	
   	/**
@@ -172,5 +183,39 @@
   		String defaultPath = "${project_loc}/Resources/definitions.yaml";
   		
   		return defaultPath;
+  	}
+  	
+  	/**
+  	 * Convert a variable string of the form "${project_loc}/path/to/file" to  "/actual_path/path/to/file".
+  	 * Very useful for paths that stored in Eclipse's reference store.
+  	 * 
+  	 * @note Note that IF there are multiple values(such as paths)
+  	 * in the string, the Eclipse API uses a ":" as a delimiter.
+  	 * For example: the string "/path/a:path/b:path/c" implies that there are THREE strings stored in this variable.
+  	 * I'm still investigating this; this cold be a byproduct of the way we handle the preferenceStore object.
+  	 * If you have a string with multiple value(or multiple paths), have a look at {@link #parseString(String) parseString}.
+  	 * 
+  	 * @param varString The variable string to convert.
+  	 * 
+  	 * @return If varString is valid, the new string with all of its variables translated to its actual values. Otherwise,
+  	 * this function returns null. 
+  	 * @throws CoreException
+  	 */
+  	public static String convertVarString(String varString) 
+  	{
+  		
+        /* To convert '${project_loc}' to an actual path... */
+		VariablesPlugin variablesPlugin = VariablesPlugin.getDefault();
+		IStringVariableManager manager = variablesPlugin.getStringVariableManager();
+		String updatedString = null;
+		try {
+			updatedString = manager.performStringSubstitution(varString);
+		} catch (CoreException e) {
+			
+			LOGGER.info(String.format("String variable \"%s\" could not converted.", varString));
+			e.printStackTrace();
+		}
+		
+		return updatedString;
   	}
   }
