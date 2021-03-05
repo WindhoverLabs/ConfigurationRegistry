@@ -1,3 +1,3 @@
-This is a template to follow for adding properties plugins to Eclipse RCP Applications
+Eclipse plugin to load CFS configuration to YAMCS Studio
 
-TODO:Finish up
+Documentation updated  on March 5, 2020
