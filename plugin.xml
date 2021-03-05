@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Resource Manager Category"
+            id="ResourceManagerView">
+      </category>
+      <view
+            name="ResourceManagerView"
+            inject="true"
+            icon="icons/sample.png"
+            category="ResourceManagerView"
+            class="com.myplugin.rmp.views.ResourceManagerView"
+            id="com.myplugin.rmp.views.ResourceManagerView">
+      </view>
+      <view
+            category="Resource Manager Category"
+            class="com.myplugin.rmp.views.PropertyManagerView"
+            id="com.myplugin.rmp.views.PropertyManagerView"
+            name="Property Manager View"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
+   </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            class="com.myplugin.rmp.propertyPage"
+            id="com.myplugin.rmp.propertyPage"
+            name=" com.myplugin.rmp.propertyPage"
+            objectClass="com.myplugin.rmp.views.PropertyManagerView$TreeObject">
+      </page>
+   </extension>
+
+</plugin>
