@@ -14,14 +14,6 @@
             class="com.windhoverlabs.studio.CFSPropertiesPage"
             id="com.windhoverlabs.studio.CFSPropertiesPage"
             name="Configuration Registry">
-         <enabledWhen>
-            <adapt
-                  type="org.eclipse.core.resources.IProject">
-               <reference
-                     definitionId="com.windhoverlabs.ide.isAirlinerNature">
-               </reference>
-            </adapt>
-         </enabledWhen>
       </page>
    </extension>
 
