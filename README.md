@@ -2,9 +2,13 @@ Eclipse plugin to load CFS configuration to YAMCS Studio.
 
 ## How to load the plugin with Studio at Startup
 
-Assumptions:  
+Dependencies:
+- `snakeYAML`
+
+Assumptions:
 - YAMCS Studio is installed in `/opt/yamcs-studio`.
 - Eclipse for RCP developers 2020-12 (4.18.0) is installed
+- The [orbit](https://download.eclipse.org/tools/orbit/downloads/) repository is added to your Eclipse installation
 
 1. Package the plugin as a `jar` file from Eclipse:
     - Right click on the `ConfigurationRegistry` Project and export as _Deployable plugins and fragments_
